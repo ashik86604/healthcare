@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Appointment - Healthcare Solutions</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">HealthCare+</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learn-more.html">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="appointment-section">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm" class="appointment-form">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Your full name" required />
+
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1234567890" required pattern="[0-9+]{7,15}" />
+
+            <label for="service">Select Service *</label>
+            <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service</option>
+                <option value="General Checkup">General Checkup</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Emergency Care">Emergency Care</option>
+            </select>
+
+            <label for="date">Preferred Date *</label>
+            <input type="date" id="date" name="date" required />
+
+            <label for="time">Preferred Time *</label>
+            <input type="time" id="time" name="time" required />
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div id="confirmationMessage" class="confirmation-message" style="display:none;">
+            <h3>Thank you for booking your appointment!</h3>
+            <p>We will contact you soon to confirm the details.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Healthcare Solutions. All rights reserved.</p>
+    </footer>
+
+    <script>if (appointmentForm) {
+    appointmentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const appointment = {
+            name: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            service: document.getElementById('service').value,
+            date: document.getElementById('date').value,
+            time: document.getElementById('time').value,
+        };
+
+        // Get existing appointments
+        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+
+        // Add new one
+        appointments.push(appointment);
+
+        // Save back to local storage
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+
+        // Show confirmation
+        appointmentForm.style.display = 'none';
+        const message = document.getElementById('confirmationMessage');
+        if (message) message.style.display = 'block';
+    });
+}
+</script>
+</body>
+</html>

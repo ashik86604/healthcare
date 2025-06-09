@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All Appointments - Healthcare Solutions</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">HealthCare+</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="book-appointment.html">Book Appointment</a></li>
+                <li><a href="appointments.html">View Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="appointment-section">
+        <h2>All Booked Appointments</h2>
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Date</th><th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsList">
+                <!-- JavaScript will inject rows here -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Healthcare Solutions. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        const tbody = document.getElementById('appointmentsList');
+
+        if (appointments.length === 0) {
+            const row = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.style.textAlign = 'center';
+            td.textContent = 'No appointments found.';
+            row.appendChild(td);
+            tbody.appendChild(row);
+        } else {
+            appointments.forEach(app => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${app.name}</td>
+                    <td>${app.email}</td>
+                    <td>${app.phone}</td>
+                    <td>${app.service}</td>
+                    <td>${app.date}</td>
+                    <td>${app.time}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
